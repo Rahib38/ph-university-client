@@ -9,8 +9,8 @@ import { store } from "./redux/features/store.ts";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
-
     <RouterProvider router={router}>{/* <App /> */}</RouterProvider>
     </Provider>
   </StrictMode>
 );
+ 
