@@ -1,17 +1,17 @@
-import { ReactNode } from "react";
+import { TRoutes, TUserPaths } from "../types";
 
-type TRoutes = {
-  path: string;
-  element: ReactNode;
-};
+// type TRoutes = {
+//   path: string;
+//   element: ReactNode;
+// };
 
-type TUserPaths = {
-    name: string;
-    path?: string;
-    element?: ReactNode;
-    children?:TUserPaths[]
-  };
-export const routeGenerator = (items:TUserPaths[]) => {
+// type TUserPaths = {
+//     name: string;
+//     path?: string;
+//     element?: ReactNode;
+//     children?:TUserPaths[]
+//   };
+export const routeGenerator = (items: TUserPaths[]) => {
   const routes = items.reduce((acc: TRoutes[], item) => {
     if (item.path && item.element) {
       acc.push({
@@ -29,5 +29,5 @@ export const routeGenerator = (items:TUserPaths[]) => {
     }
     return acc;
   }, []);
-  return routes
+  return routes;
 };
