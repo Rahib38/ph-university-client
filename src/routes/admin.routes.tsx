@@ -15,7 +15,7 @@ type TSidebarItem = {
   children?: TSidebarItem[];
 };
 
-const adminPaths = [
+export const adminPaths = [
   {
     name: "Dashboard",
     path: "dashboard",
@@ -65,23 +65,23 @@ export const adminSidebarItems = adminPaths.reduce(
   },
   []
 );
-export const adminRoutes = adminPaths.reduce((acc: TRoutes[], item) => {
-  if (item.path && item.element) {
-    acc.push({
-      path: item.path,
-      element: item.element,
-    });
-  }
-  if (item.children) {
-    item.children.forEach((child) => {
-      acc.push({
-        path: child.path,
-        element: child.element,
-      });
-    });
-  }
-  return acc;
-}, []);
+// export const adminRoutes = adminPaths.reduce((acc: TRoutes[], item) => {
+//   if (item.path && item.element) {
+//     acc.push({
+//       path: item.path,
+//       element: item.element,
+//     });
+//   }
+//   if (item.children) {
+//     item.children.forEach((child) => {
+//       acc.push({
+//         path: child.path,
+//         element: child.element,
+//       });
+//     });
+//   }
+//   return acc;
+// }, []);
 
 //!hard coded
 // const adminPaths = [
