@@ -1,6 +1,6 @@
 import { Layout } from "antd";
 import { Outlet } from "react-router-dom";
-import Sidebar from "./sidebar";
+import Sidebar from "./Sidebar";
 
 const { Header, Content } = Layout;
 
@@ -32,9 +32,9 @@ const { Header, Content } = Layout;
 export default function MainLayout() {
   return (
     <div>
-      <Layout style={{ height: "100vh" }}>
+      <Layout >
         <Sidebar ></Sidebar>
-        <Layout style={{ height: "100vh" }}>
+        <Layout>
           <Header style={{ padding: 0 }} />
           <Content style={{ margin: "24px 16px 0" }}>
             <div
