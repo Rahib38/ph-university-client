@@ -13,12 +13,16 @@ type TFormProps = {
 } & TFromConfig
 type TFromConfig={
     defaultValues?:Record<string,any>
+    resolver?:any
 }
-export default function PhFrom({ onSubmit, children,defaultValues }: TFormProps) {
+export default function PhFrom({ onSubmit, children,defaultValues ,resolver}: TFormProps) {
     
 const formConfig:TFromConfig={}
 if(defaultValues){
     formConfig['defaultValues']=defaultValues
+}
+if(resolver){
+    formConfig['resolver']=resolver
 }
 
 
