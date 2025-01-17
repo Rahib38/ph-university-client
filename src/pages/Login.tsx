@@ -14,11 +14,12 @@ export default function Login() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   // const { register, handleSubmit } = useForm({
-  //   defaultValues: {
-  //     userId: "A-0001",
-  //     password: "admin1234",
-  //   },
+   
   // });
+const  defaultValues= {
+    userId: "A-0001",
+    password: "admin1234",
+  }
   const [login] = useLoginMutation();
   // console.log('data=>',data)
   // console.log('error=>',error)
@@ -44,7 +45,7 @@ export default function Login() {
   };
   return (
     <Row justify="center" align="middle" style={{ height: "100vh" }}>
-      <PhFrom onSubmit={onSubmit}>
+      <PhFrom onSubmit={onSubmit} defaultValues={defaultValues}>
         <PhInput type="text" name="userId" label="ID: "></PhInput>
 
         {/* <input type="text" id="password" {...register("password")} /> */}
