@@ -23,3 +23,8 @@ export type TMeta = {
   totalPage: number;
 };
 export type TResponseRedux<T> =TResponse<T> & BaseQueryApi
+
+export type TQueryParam={
+  name:string,
+  value:boolean|React.Key
+}
