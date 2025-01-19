@@ -38,7 +38,7 @@ export default function MainLayout() {
   }
   return (
     <div>
-      <Layout>
+      <Layout >
         <Sidebar></Sidebar>
         <Layout>
           <Header>

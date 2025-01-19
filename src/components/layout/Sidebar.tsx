@@ -33,7 +33,7 @@ export default function Sidebar() {
   return (
     <div>
       <Sider
-       style={{height:'100vh'}}
+       style={{height:'100%'}}
         breakpoint="lg"
         collapsedWidth="0"
         //   onBreakpoint={(broken) => {
@@ -56,7 +56,7 @@ export default function Sidebar() {
         </div>
  
           <Menu
-            
+            style={{height:'100vh'}}
             theme="dark"
             mode="inline"
             defaultSelectedKeys={["4"]}

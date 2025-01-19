@@ -1,7 +1,9 @@
-import { Button } from "antd";
+import { Button, Col, Divider, Row } from "antd";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import PhFrom from "../../../components/form/PhFrom";
 import PhInput from "../../../components/form/PhInput";
+import PhSelect from "../../../components/form/PhSelect";
+import { bloodGroupOptions, gendersOptions } from "../../../constants/global";
 
 const studentDummyData = {
   password: "kst9ew0pwaswri0pe",
@@ -43,14 +45,143 @@ const studentDummyData = {
 export default function CreateStudent() {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     console.log(data);
-    const formData=new FormData()
-    formData.append('data',JSON.stringify(data))
-    console.log([...formData.entries()])
+    const formData = new FormData();
+    formData.append("data", JSON.stringify(data));
+    console.log([...formData.entries()]);
   };
   return (
-    <PhFrom onSubmit={onSubmit}>
-      <PhInput type="text" name="name" label="Name" />
-      <Button htmlType="submit">Submit</Button>
-    </PhFrom>
+    <Row>
+      <Col span={24}>
+        <PhFrom onSubmit={onSubmit}>
+          <Row gutter={8}>
+            <Divider>Personal Information</Divider>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              <PhInput type="text" name="name.firstName" label="First Name" />
+            </Col>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              <PhInput type="text" name="name.middleName" label="Middle Name" />
+            </Col>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              <PhInput type="text" name="name.lastName" label="Last Name" />
+            </Col>
+
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              <PhSelect options={gendersOptions} name="gender" label="Gender" />
+            </Col>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              <PhInput type="text" name="dateOfBirth" label="Date of Birth" />
+            </Col>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              <PhSelect options={bloodGroupOptions} name="bloodGroup" label="Blood Group" />
+            </Col>
+            <Divider>Contact Info</Divider>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              <PhInput type="text" name="email" label="Email" />
+            </Col>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              <PhInput type="text" name="contactNo" label="Contact No" />
+            </Col>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              <PhInput
+                type="text"
+                name="emergencyContactNo"
+                label="Emergency Contact No"
+              />
+            </Col>
+
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              <PhInput
+                type="text"
+                name="presentAddress"
+                label="Present Address"
+              />
+            </Col>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              <PhInput
+                type="text"
+                name="permanentAddress"
+                label="Permanent Address"
+              />
+            </Col>
+            <Divider>Guardian Info</Divider>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              <PhInput
+                type="text"
+                name="guardian.fatherName"
+                label="Father Name"
+              />
+            </Col>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              <PhInput
+                type="text"
+                name="guardian.fatherContactNo"
+                label="Father Contact No"
+              />
+            </Col>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              <PhInput
+                type="text"
+                name="guardian.fatherOccuption"
+                label="Father Occuption"
+              />
+            </Col>
+
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              <PhInput
+                type="text"
+                name="guardian.motherName"
+                label="Mother Name"
+              />
+            </Col>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              <PhInput
+                type="text"
+                name="guardian.motherContactNo"
+                label="Mother Contact No"
+              />
+            </Col>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              <PhInput
+                type="text"
+                name="guardian.motherOccuption"
+                label="Mother Occuption"
+              />
+            </Col>
+            <Divider>Local Guardian Info</Divider>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              <PhInput
+                type="text"
+                name="localGuardian.name"
+                label="Local Guradian Name"
+              />
+            </Col>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              <PhInput
+                type="text"
+                name="localGuardian.contactNo"
+                label="Local Guradian Contact No"
+              />
+            </Col>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              <PhInput
+                type="text"
+                name="localGuardian.occupation"
+                label="Local Guradian Occuption"
+              />
+            </Col>
+
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              <PhInput
+                type="text"
+                name="localGuardian.address"
+                label="Local Guradian Address"
+              />
+            </Col>
+           
+          </Row>
+          <Button htmlType="submit">Submit</Button>
+        </PhFrom>
+      </Col>
+    </Row>
   );
 }
