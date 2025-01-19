@@ -5,9 +5,9 @@ import CreateAcademicDepartment from "../pages/Admin/academicManagement/CreateAc
 import CreateAcademicFaculty from "../pages/Admin/academicManagement/CreateAcademicFaculty";
 import CreateAcademicSemester from "../pages/Admin/academicManagement/CreateAcademicSemester";
 import AdminDashboard from "../pages/Admin/AdminDashboard";
-import CreateAdmin from "../pages/Admin/CreateAdmin";
-import CreateFaculty from "../pages/Admin/CreateFaculty";
-import CreateStudent from "../pages/Admin/CreateStudent";
+import CreateAdmin from "../pages/Admin/userManagement/CreateAdmin";
+import CreateFaculty from "../pages/Admin/userManagement/CreateFaculty";
+import CreateStudent from "../pages/Admin/userManagement/CreateStudent";
 
 // type TRoutes = {
 //   path: string;
@@ -41,7 +41,7 @@ export const adminPaths = [
       {
         name: "Create A. Faculty",
         path: "create-academic-faculty",
-        element: <CreateAcademicFaculty/>,
+        element: <CreateAcademicFaculty />,
       },
       {
         name: "Academic Faculty",
@@ -58,7 +58,6 @@ export const adminPaths = [
         path: "academic-department",
         element: <AcademicDepartment />,
       },
-  
     ],
   },
   {
