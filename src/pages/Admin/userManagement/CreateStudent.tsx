@@ -4,6 +4,8 @@ import PhFrom from "../../../components/form/PhFrom";
 import PhInput from "../../../components/form/PhInput";
 import PhSelect from "../../../components/form/PhSelect";
 import { bloodGroupOptions, gendersOptions } from "../../../constants/global";
+import PhDatePicker from "../../../components/form/PhDatePicker";
+import { useGetAllSemestersQuery } from "../../../redux/features/admin/academicManagement.api";
 
 const studentDummyData = {
   password: "kst9ew0pwaswri0pe",
@@ -42,17 +44,52 @@ const studentDummyData = {
     isActive: "block",
   },
 };
+
+const studentDefaultValues={
+  name: {
+    firstName: "Nadimul",
+    middleName: "",
+    lastName: "Rahib",
+  },
+  gender: "male",
+
+  email: "nadimulrahib38@gmail.com",
+  contactNo: "98765432102",
+  emergencyContactNo: "1234567890",
+  bloodGroup: "A-",
+  presentAddress: "789 Pine Street, Greenfield",
+  permanentAddress: "123 Cedar Lane, Greenfield",
+  guardian: {
+    fatherName: "Michael Smith",
+    fatherContactNo: "9876543211",
+    fatherOccuption: "Architect",
+    motherName: "Linda Smith",
+    motherContactNo: "9876543212",
+    motherOccuption: "Teacher",
+  },
+  localGuardian: {
+    name: "Sophia Johnson",
+    contactNo: "9876543213",
+    occupation: "Nurse",
+    address: "456 Willow Road, Greenfield",
+  },
+}
 export default function CreateStudent() {
+  const {data:sData,isLoading:sIsLoading}=useGetAllSemestersQuery(undefined)
+  const semesterOptions=sData?.data?.map(item=>({
+    value:item._id,
+    label:`${item.name} ${item.year}`
+  }))
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     console.log(data);
-    const formData = new FormData();
-    formData.append("data", JSON.stringify(data));
-    console.log([...formData.entries()]);
+    // const formData = new FormData();
+    // formData.append("data", JSON.stringify(data));
+    // console.log([...formData.entries()]);
   };
   return (
     <Row>
       <Col span={24}>
-        <PhFrom onSubmit={onSubmit}>
+        <PhFrom onSubmit={onSubmit} defaultValues={studentDefaultValues}>
           <Row gutter={8}>
             <Divider>Personal Information</Divider>
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
@@ -69,7 +106,7 @@ export default function CreateStudent() {
               <PhSelect options={gendersOptions} name="gender" label="Gender" />
             </Col>
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
-              <PhInput type="text" name="dateOfBirth" label="Date of Birth" />
+              <PhDatePicker name="dateOfBirth" label="Date of Birth" />
             </Col>
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
               <PhSelect options={bloodGroupOptions} name="bloodGroup" label="Blood Group" />
@@ -177,7 +214,22 @@ export default function CreateStudent() {
                 label="Local Guradian Address"
               />
             </Col>
-           
+           <Divider>Academic Info</Divider>
+           <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              <PhSelect
+                options={semesterOptions}
+                disabled={sIsLoading}
+                name="admissionSemester"
+                label="Admission Semester"
+              />
+            </Col>
+           {/* <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              <PhSelect
+                
+                name="academicDepartment"
+                label="Admission Department"
+              />
+            </Col> */}
           </Row>
           <Button htmlType="submit">Submit</Button>
         </PhFrom>
