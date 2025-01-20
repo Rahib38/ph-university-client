@@ -74,8 +74,8 @@ const studentDefaultValues={
     occupation: "Nurse",
     address: "456 Willow Road, Greenfield",
   },
-  admissionSemester: "675932fc34e382a2909c62bd",
-  academicDepartment: "675fafc43dfa8c99719ee3d9",
+  // admissionSemester: "675932fc34e382a2909c62bd",
+  // academicDepartment: "675fafc43dfa8c99719ee3d9",
 }
 export default function CreateStudent() {
   const[addStudent,{data,error}]=useAddStudentMutation()
@@ -97,10 +97,11 @@ export default function CreateStudent() {
       password: 'student123',
       student: data,
     };
+    console.log(studentData)
     const formData = new FormData();
     formData.append("data", JSON.stringify(studentData));
     addStudent(formData)
-    console.log([...formData.entries()]);
+    console.log(Object.fromEntries(formData));
   };
   return (
     <Row>
@@ -125,7 +126,7 @@ export default function CreateStudent() {
               <PhDatePicker name="dateOfBirth" label="Date of Birth" />
             </Col>
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
-              <PhSelect options={bloodGroupOptions} name="bloodGroup" label="Blood Group" />
+              <PhSelect options={bloodGroupOptions} name="bloogGroup" label="Blood Group" />
             </Col>
             <Divider>Contact Info</Divider>
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
@@ -174,7 +175,7 @@ export default function CreateStudent() {
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
               <PhInput
                 type="text"
-                name="guardian.fatherOccuption"
+                name="guardian.fatherOccupation"
                 label="Father Occuption"
               />
             </Col>
@@ -196,7 +197,7 @@ export default function CreateStudent() {
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
               <PhInput
                 type="text"
-                name="guardian.motherOccuption"
+                name="guardian.motherOccupation"
                 label="Mother Occuption"
               />
             </Col>
