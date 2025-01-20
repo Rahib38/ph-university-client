@@ -10,7 +10,14 @@ import { semesterOptions } from "../../../constants/semester";
 import { useAddAcademicSemestersMutation } from "../../../redux/features/admin/academicManagement.api";
 import { academicSemesterSchema } from "../../../schemas/academicManagementSchema";
 import { TResponse } from "../../../types/global";
-
+export type TSemester={
+  name:string
+  code: string
+  year: string
+  startMonth: string
+  endMonth:string
+  message?:string
+}
 const currentYear = new Date().getFullYear();
 const yearOptions = [0, 1, 2, 3, 4].map((number) => ({
   value: String(currentYear + number),
@@ -34,11 +41,11 @@ const CreateAcademicSemester = () => {
     };
     try {
       console.log(semesterData);
-      const res = await addAcademicSemester(semesterData)as TResponse;
+      const res = await addAcademicSemester(semesterData)as TResponse<TSemester>;
       if(res.error){
         toast.error(res.error.data.message,{id:toastId})
       }else{
-        toast.success(res.data.message,{id:toastId})
+        toast.success(res?.data?.message,{id:toastId})
 
       }
       console.log(res)
@@ -53,7 +60,7 @@ const CreateAcademicSemester = () => {
         <PhFrom
           onSubmit={onSubmit}
           resolver={zodResolver(academicSemesterSchema)}
-        >
+        >  
           <PhSelect label="Name" name="name" options={semesterOptions} />
           <PhSelect label="Year" name="year" options={yearOptions} />
           <PhSelect
