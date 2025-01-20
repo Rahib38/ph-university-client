@@ -5,45 +5,46 @@ import PhInput from "../../../components/form/PhInput";
 import PhSelect from "../../../components/form/PhSelect";
 import { bloodGroupOptions, gendersOptions } from "../../../constants/global";
 import PhDatePicker from "../../../components/form/PhDatePicker";
-import { useGetAllSemestersQuery } from "../../../redux/features/admin/academicManagement.api";
+import { useGetAllAcademicDepartmentQuery, useGetAllSemestersQuery } from "../../../redux/features/admin/academicManagement.api";
+import { useAddStudentMutation } from "../../../redux/features/admin/userManagement.api";
 
-const studentDummyData = {
-  password: "kst9ew0pwaswri0pe",
-  student: {
-    id: "S67892",
-    name: {
-      firstName: "Nadimul",
-      middleName: "",
-      lastName: "Rahib",
-    },
-    gender: "male",
-    dateOfBirth: "2003-12-05",
-    email: "nadimulrahib38@gmail.com",
-    contactNo: "98765432102",
-    emergencyContactNo: "1234567890",
-    bloodGroup: "A-",
-    presentAddress: "789 Pine Street, Greenfield",
-    permanentAddress: "123 Cedar Lane, Greenfield",
-    guardian: {
-      fatherName: "Michael Smith",
-      fatherContactNo: "9876543211",
-      fatherOccuption: "Architect",
-      motherName: "Linda Smith",
-      motherContactNo: "9876543212",
-      motherOccuption: "Teacher",
-    },
-    localGuardian: {
-      name: "Sophia Johnson",
-      contactNo: "9876543213",
-      occupation: "Nurse",
-      address: "456 Willow Road, Greenfield",
-    },
-    admissionSemester: "675932fc34e382a2909c62bd",
-    academicDepartment: "675fafc43dfa8c99719ee3d9",
-    profileImage: "https://example.com/images/emily_smith.jpg",
-    isActive: "block",
-  },
-};
+// const studentDummyData = {
+//   password: "kst9ew0pwaswri0pe",
+//   student: {
+//     id: "S67892",
+//     name: {
+//       firstName: "Nadimul",
+//       middleName: "",
+//       lastName: "Rahib",
+//     },
+//     gender: "male",
+//     dateOfBirth: "2003-12-05",
+//     email: "nadimulrahib38@gmail.com",
+//     contactNo: "98765432102",
+//     emergencyContactNo: "1234567890",
+//     bloodGroup: "A-",
+//     presentAddress: "789 Pine Street, Greenfield",
+//     permanentAddress: "123 Cedar Lane, Greenfield",
+//     guardian: {
+//       fatherName: "Michael Smith",
+//       fatherContactNo: "9876543211",
+//       fatherOccuption: "Architect",
+//       motherName: "Linda Smith",
+//       motherContactNo: "9876543212",
+//       motherOccuption: "Teacher",
+//     },
+//     localGuardian: {
+//       name: "Sophia Johnson",
+//       contactNo: "9876543213",
+//       occupation: "Nurse",
+//       address: "456 Willow Road, Greenfield",
+//     },
+//     admissionSemester: "675932fc34e382a2909c62bd",
+//     academicDepartment: "675fafc43dfa8c99719ee3d9",
+//     profileImage: "https://example.com/images/emily_smith.jpg",
+//     isActive: "block",
+//   },
+// };
 
 const studentDefaultValues={
   name: {
@@ -53,7 +54,7 @@ const studentDefaultValues={
   },
   gender: "male",
 
-  email: "nadimulrahib38@gmail.com",
+  email: "nadimulrahib3@gmail.com",
   contactNo: "98765432102",
   emergencyContactNo: "1234567890",
   bloodGroup: "A-",
@@ -73,18 +74,33 @@ const studentDefaultValues={
     occupation: "Nurse",
     address: "456 Willow Road, Greenfield",
   },
+  admissionSemester: "675932fc34e382a2909c62bd",
+  academicDepartment: "675fafc43dfa8c99719ee3d9",
 }
 export default function CreateStudent() {
+  const[addStudent,{data,error}]=useAddStudentMutation()
+  console.log({data,error})
   const {data:sData,isLoading:sIsLoading}=useGetAllSemestersQuery(undefined)
+  const {data:dData,isLoading:dIsLoading}=useGetAllAcademicDepartmentQuery(undefined)
   const semesterOptions=sData?.data?.map(item=>({
     value:item._id,
     label:`${item.name} ${item.year}`
   }))
+ 
+  const academicDepartmentOptions=dData?.data?.map(item=>({
+    value:item._id,
+    label:item.name
+  }))
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     console.log(data);
-    // const formData = new FormData();
-    // formData.append("data", JSON.stringify(data));
-    // console.log([...formData.entries()]);
+    const studentData = {
+      password: 'student123',
+      student: data,
+    };
+    const formData = new FormData();
+    formData.append("data", JSON.stringify(studentData));
+    addStudent(formData)
+    console.log([...formData.entries()]);
   };
   return (
     <Row>
@@ -223,13 +239,14 @@ export default function CreateStudent() {
                 label="Admission Semester"
               />
             </Col>
-           {/* <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+           <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
               <PhSelect
-                
+                 options={academicDepartmentOptions}
+                 disabled={dIsLoading}
                 name="academicDepartment"
                 label="Admission Department"
               />
-            </Col> */}
+            </Col>
           </Row>
           <Button htmlType="submit">Submit</Button>
         </PhFrom>
