@@ -57,7 +57,7 @@ const studentDefaultValues = {
   },
   gender: "male",
 
-  email: "nadimulrahib32@gmail.com",
+  email: "nadimulrahib43@gmail.com",
   contactNo: "98765432102",
   emergencyContactNo: "1234567890",
   bloogGroup: "A-",
@@ -105,7 +105,7 @@ export default function CreateStudent() {
     console.log(studentData);
     const formData = new FormData();
     formData.append("data", JSON.stringify(studentData));
-    formData.append("file", data.image);
+    // formData.append("file", data.image);
 
     addStudent(formData);
     console.log(Object.fromEntries(formData));
