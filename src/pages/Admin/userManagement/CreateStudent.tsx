@@ -1,11 +1,14 @@
-import { Button, Col, Divider, Row } from "antd";
-import { FieldValues, SubmitHandler } from "react-hook-form";
+import { Button, Col, Divider, Form, Input, Row } from "antd";
+import { Controller, FieldValues, SubmitHandler } from "react-hook-form";
+import PhDatePicker from "../../../components/form/PhDatePicker";
 import PhFrom from "../../../components/form/PhFrom";
 import PhInput from "../../../components/form/PhInput";
 import PhSelect from "../../../components/form/PhSelect";
 import { bloodGroupOptions, gendersOptions } from "../../../constants/global";
-import PhDatePicker from "../../../components/form/PhDatePicker";
-import { useGetAllAcademicDepartmentQuery, useGetAllSemestersQuery } from "../../../redux/features/admin/academicManagement.api";
+import {
+  useGetAllAcademicDepartmentQuery,
+  useGetAllSemestersQuery,
+} from "../../../redux/features/admin/academicManagement.api";
 import { useAddStudentMutation } from "../../../redux/features/admin/userManagement.api";
 
 // const studentDummyData = {
@@ -46,7 +49,7 @@ import { useAddStudentMutation } from "../../../redux/features/admin/userManagem
 //   },
 // };
 
-const studentDefaultValues={
+const studentDefaultValues = {
   name: {
     firstName: "Nadimul",
     middleName: "",
@@ -54,19 +57,19 @@ const studentDefaultValues={
   },
   gender: "male",
 
-  email: "nadimulrahib3@gmail.com",
+  email: "nadimulrahib32@gmail.com",
   contactNo: "98765432102",
   emergencyContactNo: "1234567890",
-  bloodGroup: "A-",
+  bloogGroup: "A-",
   presentAddress: "789 Pine Street, Greenfield",
   permanentAddress: "123 Cedar Lane, Greenfield",
   guardian: {
     fatherName: "Michael Smith",
     fatherContactNo: "9876543211",
-    fatherOccuption: "Architect",
+    fatherOccupation: "Architect",
     motherName: "Linda Smith",
     motherContactNo: "9876543212",
-    motherOccuption: "Teacher",
+    motherOccupation: "Teacher",
   },
   localGuardian: {
     name: "Sophia Johnson",
@@ -76,31 +79,35 @@ const studentDefaultValues={
   },
   // admissionSemester: "675932fc34e382a2909c62bd",
   // academicDepartment: "675fafc43dfa8c99719ee3d9",
-}
+};
 export default function CreateStudent() {
-  const[addStudent,{data,error}]=useAddStudentMutation()
-  console.log({data,error})
-  const {data:sData,isLoading:sIsLoading}=useGetAllSemestersQuery(undefined)
-  const {data:dData,isLoading:dIsLoading}=useGetAllAcademicDepartmentQuery(undefined)
-  const semesterOptions=sData?.data?.map(item=>({
-    value:item._id,
-    label:`${item.name} ${item.year}`
-  }))
- 
-  const academicDepartmentOptions=dData?.data?.map(item=>({
-    value:item._id,
-    label:item.name
-  }))
+  const [addStudent, { data, error }] = useAddStudentMutation();
+  console.log({ data, error });
+  const { data: sData, isLoading: sIsLoading } =
+    useGetAllSemestersQuery(undefined);
+  const { data: dData, isLoading: dIsLoading } =
+    useGetAllAcademicDepartmentQuery(undefined);
+  const semesterOptions = sData?.data?.map((item) => ({
+    value: item._id,
+    label: `${item.name} ${item.year}`,
+  }));
+
+  const academicDepartmentOptions = dData?.data?.map((item) => ({
+    value: item._id,
+    label: item.name,
+  }));
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     console.log(data);
     const studentData = {
-      password: 'student123',
+      password: "student123",
       student: data,
     };
-    console.log(studentData)
+    console.log(studentData);
     const formData = new FormData();
     formData.append("data", JSON.stringify(studentData));
-    addStudent(formData)
+    formData.append("file", data.image);
+
+    addStudent(formData);
     console.log(Object.fromEntries(formData));
   };
   return (
@@ -126,7 +133,27 @@ export default function CreateStudent() {
               <PhDatePicker name="dateOfBirth" label="Date of Birth" />
             </Col>
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
-              <PhSelect options={bloodGroupOptions} name="bloogGroup" label="Blood Group" />
+              <PhSelect
+                options={bloodGroupOptions}
+                name="bloogGroup"
+                label="Blood Group"
+              />
+            </Col>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              <Controller
+                name="image"
+                render={({ field: { onChange, value, ...field } }) => (
+                  <Form.Item label="Pictures">
+                    {" "}
+                    <Input
+                      type="file"
+                      value={value?.fileName}
+                      {...field}
+                      onChange={(e) => onChange(e.target.files?.[0])}
+                    />
+                  </Form.Item>
+                )}
+              />
             </Col>
             <Divider>Contact Info</Divider>
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
@@ -231,8 +258,8 @@ export default function CreateStudent() {
                 label="Local Guradian Address"
               />
             </Col>
-           <Divider>Academic Info</Divider>
-           <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+            <Divider>Academic Info</Divider>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
               <PhSelect
                 options={semesterOptions}
                 disabled={sIsLoading}
@@ -240,10 +267,10 @@ export default function CreateStudent() {
                 label="Admission Semester"
               />
             </Col>
-           <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
               <PhSelect
-                 options={academicDepartmentOptions}
-                 disabled={dIsLoading}
+                options={academicDepartmentOptions}
+                disabled={dIsLoading}
                 name="academicDepartment"
                 label="Admission Department"
               />
